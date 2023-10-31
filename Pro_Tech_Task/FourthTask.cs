@@ -30,7 +30,7 @@ namespace PRO_Tech
             int firstIndex = -1; // Первый индекс гласного символа
             int lastIndex = -1; // Последний индекс гласного символа
             string resultConcat = ""; // Строка результата соединения
-            for (int i = 0; i < inputString.Length; i++)
+            for (int i = 0; i < inputString.Length; i++) // Цикл поиска первого и последнего индекса гласного символа <aeiouy>
             {
                 char c = inputString[i];
                 if ("aeiouy".Contains(c) && firstIndex == -1)
