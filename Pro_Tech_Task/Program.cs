@@ -24,12 +24,21 @@ namespace PRO_Tech
             Console.Write("Введите строку: ");
 
             inputString = Console.ReadLine().Replace(" ", ""); // Входящая строка + удаление всех пробелов
+            GetIfNull(ref inputString);
             outputString = StringSplit(inputString);
             SecondTask.Print(inputString);
             ThirdTask.CountPrint(outputString.ToArray());
             FourthTask.PrintLargSubstring(outputString);
 
 
+        }
+        public static void GetIfNull(ref string inputString) // Если входящая строка пуста, то она заменяется на teststring и продолжает работу
+        {
+            if (inputString.Length == 0)
+            {
+                Console.WriteLine("Строка пуста, была проведена замена на: 'teststring'");
+                inputString = "teststring";
+            }
         }
 
         public static string StringSplit(string inputString)
