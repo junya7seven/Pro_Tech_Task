@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using PRO_Tech;
+using Pro_Tech_Task;
 
 namespace PRO_Tech
 {
@@ -28,8 +29,17 @@ namespace PRO_Tech
             SecondTask.Print(inputString);
             ThirdTask.CountPrint(outputString.ToArray());
             FourthTask.PrintLargSubstring(outputString);
+            FiftTask.ChooseSort();
 
 
+        }
+        private static void GetIfNull(ref string inputString) // Если входящая строка пуста, то она заменяется на teststring и продолжает работу
+        {
+            if (inputString.Length == 0)
+            {
+                Console.WriteLine("Строка пуста, была проведена замена на: 'teststring'");
+                inputString = "teststring";
+            }
         }
 
         public static string StringSplit(string inputString)

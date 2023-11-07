@@ -37,7 +37,7 @@ namespace PRO_Tech
             return result = false; // Вовращаем ложь
         }
 
-        public static string GetUpperNoEngChars(string inputString)
+        static string GetUpperNoEngChars(string inputString)
         {
 
             HashSet<char> result = new HashSet<char>(); // Создаём Хэш коллекцию

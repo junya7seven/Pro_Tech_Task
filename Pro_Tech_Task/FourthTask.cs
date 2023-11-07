@@ -21,11 +21,12 @@ namespace PRO_Tech
             string resultConcat = FindSubstring(inputString);
             if (result)
             {
+                Console.WriteLine();
                 Console.WriteLine($"Поиск самой длинной подстроки начинающуюся и заканчивающуюся на гласный символ: {resultConcat}");
             }
         }
 
-        public static string FindSubstring(string inputString)
+        static string FindSubstring(string inputString)
         {
             int firstIndex = -1; // Первый индекс гласного символа
             int lastIndex = -1; // Последний индекс гласного символа
