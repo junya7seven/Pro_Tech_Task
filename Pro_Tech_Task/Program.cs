@@ -25,6 +25,7 @@ namespace PRO_Tech
             Console.Write("Введите строку: ");
 
             inputString = Console.ReadLine().Replace(" ", ""); // Входящая строка + удаление всех пробелов
+            GetIfNull(ref inputString);
             outputString = StringSplit(inputString);
             SecondTask.Print(inputString);
             ThirdTask.CountPrint(outputString.ToArray());
