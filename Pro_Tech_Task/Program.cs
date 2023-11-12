@@ -30,7 +30,7 @@ namespace PRO_Tech
             SecondTask.Print(inputString);
             ThirdTask.CountPrint(outputString.ToArray());
             FourthTask.PrintLargSubstring(outputString);
-            FiftTask.ChooseSort();
+            FiftTask.PrintSort();
 
 
         }
