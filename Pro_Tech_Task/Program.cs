@@ -45,6 +45,7 @@ namespace PRO_Tech
                 Environment.Exit(0);
                 Console.WriteLine("Программа была завершена");
             }
+
         }
         // Если входящая строка пуста, то она заменяется на teststring и продолжает работу
         private static void GetIfNull(ref string inputString) 

@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+
 namespace PRO_Tech
+
 {
     class FiftTask : SecondTask
     {
@@ -24,6 +26,7 @@ namespace PRO_Tech
         public static void PrintSort()
         {
 
+
             ChooseSort(modString);
         }
 
@@ -36,25 +39,38 @@ namespace PRO_Tech
             switch(choose)
             {
                 case "1":
+        }
+
+        public static void ChooseSort()
+        {
+                char[] arr = outputString.ToCharArray(); // Обработанная строка
+                Console.WriteLine();
+                Console.WriteLine("Введите выбор способа сортировка\n1.Быстрая сортировка QuickSort 2.Сортировка деревом TreeSort\n Нажмите 1 или 2 - Press 1 or 2");
+                string choose = Console.ReadLine(); // Ввод выбора сортировки пользователем
+                if (choose == "1")
+                {
+
                     QuickSort(arr, 0, arr.Length - 1); // Вызываем функцию QuickSort для сортировки массива
                     string sortedString = new string(arr);
                     Console.WriteLine($"Обработанная строка {outputString}...Сортировка");
                     Console.WriteLine(sortedString + "\n");
+
                     break;
                 case "2":
-                    // Вставляем каждый символ из входной строки в дерево
-                    BinaryTree tree = new BinaryTree();
-                    foreach (char c in arr)
-                    {
-                        tree.Insert(c);
-                    }
-                    Console.WriteLine($"Обработанная строка '{outputString}'...Сортировка\nДля хорошей работы программы, были убраны повторяющиеся символы ");
-                    tree.InOrderTraversal(); // Вывод отсортированной строки
+
+
                     break;
                 default:
                     Console.WriteLine("Сортировка не выбрана - автоматический выбор сортировки QuickSort");
                     goto case "1";
             }
+
+
+                }
+                else
+                {
+                    Console.WriteLine("Сортировка не выбрана\nВведите значение 1 или 2 для выбора сортировка '1.Быстрая сортировка QuickSort 2.Сортировка деревом TreeSort'");
+                }
         }
         ///////////// Быстрая сортировка Хоара
         static void QuickSort(char[] arr, int left, int right)
