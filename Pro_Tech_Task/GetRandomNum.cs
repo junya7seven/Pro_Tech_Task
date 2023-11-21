@@ -36,7 +36,7 @@ namespace PRO_Tech
                 {
                     // Успешный запрос
                     randomNumber = response.Content.ReadAsStringAsync().Result;
-                    Console.WriteLine($"Сгенерированное случайное число от 0 до {maxNumb+1} : " + randomNumber);
+                    Console.WriteLine($"Сгенерированное случайное число от 0 до {maxNumb} : " + randomNumber); 
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace PRO_Tech
                 else
                 {
                     Console.WriteLine($"Удаление символа по индексу - {index}");
-                    string cutStr = outputString.Remove(index-1, 1); // Удаление символа из строки + вывод результата
+                    string cutStr = outputString.Remove(index, 1); // Удаление символа из строки + вывод результата
                     Console.WriteLine($"{outputString} ---> {cutStr}");
                 }
             }
@@ -90,7 +90,7 @@ namespace PRO_Tech
             Random rnd = new Random(); // Создание рандомного числа
             int indexRnd = rnd.Next(0, outputString.Length - 1); // Получение рандомного числа
             Console.WriteLine($"Случайное число: {indexRnd}");
-            string cutStr = outputString.Remove(indexRnd-1, 1); // Удаление символа из строки + результат
+            string cutStr = outputString.Remove(indexRnd, 1); // Удаление символа из строки + результат
             Console.WriteLine($"{outputString} ---> {cutStr}");
         }
         // Попытка преобразовать полученное число в index integer 
