@@ -18,12 +18,9 @@ namespace PRO_Tech
 
         public static void PrintLargSubstring(string inputString)
         {
-            string resultConcat = FindSubstring(inputString);
-            if (result)
-            {
-                Console.WriteLine();
-                Console.WriteLine($"Поиск самой длинной подстроки начинающуюся и заканчивающуюся на гласный символ: {resultConcat}");
-            }
+            string resultConcat = FindSubstring(inputString);     
+            Console.WriteLine();
+            Console.WriteLine($"Поиск самой длинной подстроки начинающуюся и заканчивающуюся на гласный символ: {resultConcat}");   
         }
 
         static string FindSubstring(string inputString)

@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Pro_Tech_Task
+
+namespace PRO_Tech
+
 {
     class FiftTask : SecondTask
     {
@@ -23,10 +25,20 @@ namespace Pro_Tech_Task
         // Проверка по заданию из класса SecondTask (строка должна содержать только англ. символы нижнего регистра)
         public static void PrintSort()
         {
-            if (result)
+
+
+            ChooseSort(modString);
+        }
+
+        public static void ChooseSort(string outputString)
+        {
+            char[] arr = outputString.ToCharArray(); // Обработанная строка
+            Console.WriteLine();
+            Console.WriteLine("Введите выбор способа сортировки\n1.Быстрая сортировка QuickSort 2.Сортировка деревом TreeSort\nНажмите 1 или 2 - Press 1 or 2");
+            string choose = Console.ReadLine(); // Ввод выбора сортировки пользователем
+            switch(choose)
             {
-                ChooseSort();
-            }
+                case "1":
         }
 
         public static void ChooseSort()
@@ -37,21 +49,22 @@ namespace Pro_Tech_Task
                 string choose = Console.ReadLine(); // Ввод выбора сортировки пользователем
                 if (choose == "1")
                 {
+
                     QuickSort(arr, 0, arr.Length - 1); // Вызываем функцию QuickSort для сортировки массива
                     string sortedString = new string(arr);
                     Console.WriteLine($"Обработанная строка {outputString}...Сортировка");
                     Console.WriteLine(sortedString + "\n");
-                }
-                else if (choose == "2")
-                {
-                    // Вставляем каждый символ из входной строки в дерево
-                    BinaryTree tree = new BinaryTree();
-                    foreach (char c in arr)
-                    {
-                        tree.Insert(c);
-                    }
-                    Console.WriteLine($"Обработанная строка '{outputString}'...Сортировка\nДля хорошей работы программы, были убраны повторяющиеся символы ");
-                    tree.InOrderTraversal(); // Вывод отсортированной строки
+
+                    break;
+                case "2":
+
+
+                    break;
+                default:
+                    Console.WriteLine("Сортировка не выбрана - автоматический выбор сортировки QuickSort");
+                    goto case "1";
+            }
+
 
                 }
                 else

@@ -14,17 +14,17 @@ namespace PRO_Tech
          * qweQWEЙЦУ -> Ошибка
          * qwe -> ewqqwe
          */
-        public static bool result;
+        public static bool isErrChars;
         public static void Print(string inputString)
         {
-            result = isNoUpperEngChars(inputString); // вызов метода отвечающий за проверку на наличие не подходящих символов
-            if (!result) // проверка на наличие ошибочных символов в хэш result
+            isErrChars = isNoUpperEngChars(inputString); // вызов метода отвечающий за проверку на наличие не подходящих символов
+            if (!isErrChars) // проверка на наличие ошибочных символов в хэш result
             {
                 Console.WriteLine($"Ошибочные символы: {GetUpperNoEngChars(inputString)}"); // если в списке есть символы - выводим их
             }
             else
             {
-                Console.WriteLine($"Обработанная строка: {outputString}"); // если ошибочных символов нет - выводим обработанную строку из FirstTask
+                Console.WriteLine($"Обработанная строка: {modString}"); // если ошибочных символов нет - выводим обработанную строку из FirstTask
             }
         }
         public static bool isNoUpperEngChars(string inputString) // Выполняем проверку на наличие неподходящих символов 
@@ -32,9 +32,9 @@ namespace PRO_Tech
             string upperEngChars = GetUpperNoEngChars(inputString);
             if ((string.IsNullOrEmpty(upperEngChars))) // Если коллекция ХэшСэт пуста, то
             {
-                return result = true; // Возвращаем истину
+                return isErrChars = true; // Возвращаем истину
             }
-            return result = false; // Вовращаем ложь
+            return isErrChars = false; // Вовращаем ложь
         }
 
         static string GetUpperNoEngChars(string inputString)
