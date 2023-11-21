@@ -12,7 +12,7 @@ namespace PRO_Tech
          * qwe -> ewqqwe -> q-2 w-2 e-2
          * qweEWУЦ12 -> не подходящие символы: EWУЦ12
          */
-
+        
         public static void CountPrint(char[] inputString)
         {
             Dictionary<char, int> characterCount = new Dictionary<char, int>(); // Создаём коллекцию из пары ключей для символа и его количества в обработанной строке
@@ -28,13 +28,10 @@ namespace PRO_Tech
                 }
             }
 
-            if (result) // Если условия из второго класса подходят под задачу, то выводим результат
+            foreach (var pair in characterCount) // Вывод не подходящих символов
             {
-                foreach (var pair in characterCount)
-                {
-                    Console.WriteLine($"Символ '{pair.Key}' встречается {pair.Value} раз.");
-                }
-            }
+                Console.WriteLine($"Символ '{pair.Key}' встречается {pair.Value} раз.");
+            }   
         }
     }
 }

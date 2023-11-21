@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using PPRO_Tech;
 using PRO_Tech;
-using Pro_Tech_Task;
 
 namespace PRO_Tech
 {
@@ -19,22 +19,35 @@ namespace PRO_Tech
          *    abcde -> edcbaabcde
         */
         public static string? inputString;
-        public static string? outputString;
+        public static string? modString;
         public static void Main(string[] args)
         {
             Console.Write("Введите строку: ");
 
             inputString = Console.ReadLine().Replace(" ", ""); // Входящая строка + удаление всех пробелов
             GetIfNull(ref inputString);
-            outputString = StringSplit(inputString);
+            modString = StringSplit(inputString);
             SecondTask.Print(inputString);
-            ThirdTask.CountPrint(outputString.ToArray());
-            FourthTask.PrintLargSubstring(outputString);
-            FiftTask.ChooseSort();
-
-
+            isOutProgramm();
+            ThirdTask.CountPrint(modString.ToArray());
+            FourthTask.PrintLargSubstring(modString);
+            FiftTask.PrintSort();
+            Console.WriteLine();
+            GetRandomNum randomNum = new GetRandomNum();
+            GetRandomNum.RandomNumb();
+            randomNum.CutElement(modString);
         }
-        private static void GetIfNull(ref string inputString) // Если входящая строка пуста, то она заменяется на teststring и продолжает работу
+        // Проверка переменной отвечающей за проверку входной строки на наличие англ символов нижнего регистра + завершение программы
+        private static void isOutProgramm()
+        {
+            if (!SecondTask.isErrChars)
+            {
+                Environment.Exit(0);
+                Console.WriteLine("Программа была завершена");
+            }
+        }
+        // Если входящая строка пуста, то она заменяется на teststring и продолжает работу
+        private static void GetIfNull(ref string inputString) 
         {
             if (inputString.Length == 0)
             {
@@ -45,21 +58,22 @@ namespace PRO_Tech
 
         public static string StringSplit(string inputString)
         {
-            inputString = inputString.Replace(" ", ""); // Удаление всех пробелов
             int split = inputString.Length / 2; // Получение значение соответствующее половины длину строки
-            string result = " ";
+            string strResult = " ";
             if (inputString.Length % 2 == 0)
             {
                 string first = new string(inputString.Substring(0, split).Reverse().ToArray()); // деление на 1 подстроку с 0 символа до половины строки + переворачивание 
                 string second = new string(inputString.Substring(split).Reverse().ToArray()); // деление на 2 подстроку с половины строки до конца + переворачивание 
-                result = string.Concat(first, second); // соединение двух подстрок
+                strResult = string.Concat(first, second); // соединение двух подстрок
             }
             else
             {
-                result = new string(inputString.Reverse().ToArray()); // переворачивание входящей строки
-                result = string.Concat(result, inputString); // соединение перевёрнутой строки с входящей
+                strResult = new string(inputString.Reverse().ToArray()); // переворачивание входящей строки
+                strResult = string.Concat(strResult, inputString); // соединение перевёрнутой строки с входящей
             }
-            return result;
+            return strResult;
+
+
         }
     }
 }
