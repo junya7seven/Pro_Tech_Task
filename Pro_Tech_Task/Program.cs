@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using PRO_Tech;
+using Pro_Tech_Task;
 
 namespace PRO_Tech
 {
@@ -17,63 +20,146 @@ namespace PRO_Tech
          *    abcdef -> cbafed
          *    abcde -> edcbaabcde
         */
-        public static string? inputString;
-        public static string? modString;
-        public static void Main(string[] args)
-        {
-            Console.Write("Введите строку: ");
 
-            inputString = Console.ReadLine().Replace(" ", ""); // Входящая строка + удаление всех пробелов
-            GetIfNull(ref inputString);
-            modString = StringSplit(inputString);
-            SecondTask.Print(inputString);
-            isOutProgramm();
-            ThirdTask.CountPrint(modString.ToArray());
-            FourthTask.PrintLargSubstring(modString);
-            FiftTask.PrintSort();
-            Console.WriteLine();
-            GetRandomNum randomNum = new GetRandomNum();
-            GetRandomNum.RandomNumb();
-            randomNum.CutElement(modString);
-        }
-        // Проверка переменной отвечающей за проверку входной строки на наличие англ символов нижнего регистра + завершение программы
-        private static void isOutProgramm()
+        async static Task Main(string[] args)
         {
-            if (!SecondTask.isErrChars)
-            {
-                Environment.Exit(0);
-                Console.WriteLine("Программа была завершена");
-            }
+            string s = "asdasdad";
+            await Console.Out.WriteLineAsync(s);
+            RandomNumber rnd = new RandomNumber();
+            StringOperation oper = new StringOperation(s);
+            Sort sort = new Sort();
+            oper.Print();
+            sort.ChooseSort(s);
 
+            await Console.Out.WriteLineAsync(await rnd.RemoveChar(s));
         }
-        // Если входящая строка пуста, то она заменяется на teststring и продолжает работу
-        private static void GetIfNull(ref string inputString) 
+    }
+    class StringOperation
+    {
+        private bool check = false;
+
+        public string InputString { get; set; }
+        public StringOperation(string inputString)
         {
-            if (inputString.Length == 0)
-            {
-                Console.WriteLine("Строка пуста, была проведена замена на: 'teststring'");
-                inputString = "teststring";
-            }
+            this.InputString = inputString;
         }
 
-        public static string StringSplit(string inputString)
+        public void Print()
         {
-            int split = inputString.Length / 2; // Получение значение соответствующее половины длину строки
-            string strResult = " ";
-            if (inputString.Length % 2 == 0)
+            List<char> list = new List<char>(isTrueString());
+            Dictionary<char,int> dict = new Dictionary<char,int>(CountPrint());
+            string result = StringSplit();
+            string largSubstring = FindLargestVowelSubstring(result);
+            if(check)
             {
-                string first = new string(inputString.Substring(0, split).Reverse().ToArray()); // деление на 1 подстроку с 0 символа до половины строки + переворачивание 
-                string second = new string(inputString.Substring(split).Reverse().ToArray()); // деление на 2 подстроку с половины строки до конца + переворачивание 
-                strResult = string.Concat(first, second); // соединение двух подстрок
+                Console.WriteLine("Ошибочные символы:");
+                foreach (char c in list)
+                {
+                    Console.WriteLine(c);
+                }
             }
             else
             {
-                strResult = new string(inputString.Reverse().ToArray()); // переворачивание входящей строки
-                strResult = string.Concat(strResult, inputString); // соединение перевёрнутой строки с входящей
+                Console.WriteLine($"Результат строки - {result}");
+                Console.WriteLine($"Наибольшая подстрока - {largSubstring}");
+                foreach (var pair in dict)
+                {
+                    Console.WriteLine($"Символ '{pair.Key}' встречается {pair.Value} раз.");
+                }
             }
-            return strResult;
+        }
+
+        private HashSet<char> isTrueString()
+        {
+            HashSet<char> result = new HashSet<char>();
+            foreach(char c in InputString)
+            {
+                if (!Regex.IsMatch(c.ToString(), @"[a-z]"))
+                {
+                    
+                    result.Add(c);
+                }
+            }
+            if(result.Count > 0)
+            {
+                check = true;
+            }
+            return result;
+        }
+
+        private string StringSplit()
+        {
+            StringBuilder result = new StringBuilder();
+
+            if (InputString.Length % 2 == 0)
+            {
+                foreach (char c in InputString.Substring(0, InputString.Length / 2).ToCharArray().Reverse())
+                {
+                    result.Append(c);
+                }
+                foreach (char c in InputString.Substring(InputString.Length / 2).ToCharArray().Reverse())
+                {
+                    result.Append(c);
+                }
+            }
+            else
+            {
+                foreach (char c in InputString.ToCharArray().Reverse())
+                {
+                    result.Append(c);
+                }
+                result.Append(InputString);
+            }
+
+            return result.ToString();
+        }
 
 
+        private Dictionary<char,int> CountPrint()
+        {
+            Dictionary<char, int> charCount = new Dictionary<char,int>();
+            foreach (var item in InputString)
+            {
+                if(charCount.ContainsKey(item))
+                {
+                    charCount[item]++;
+                }
+                else
+                {
+                    charCount[item] = 1;
+                }
+            }
+            return charCount;
+            
+        }
+
+        private string FindLargestVowelSubstring(string InputString)
+        {
+            string pattern = @"[aeiouy]";
+            MatchCollection matches = Regex.Matches(InputString, pattern);
+            string vowels = string.Concat(matches.Select(m => m.Value));
+
+            if (string.IsNullOrEmpty(vowels))
+            {
+                return string.Empty;
+            }
+
+            int maxSubstringLength = 0;
+            string largestSubstring = string.Empty;
+
+            foreach (Match match in matches)
+            {
+                int startIndex = match.Index;
+                int endIndex = InputString.LastIndexOf(match.Value);
+
+                if (endIndex - startIndex + 1 > maxSubstringLength)
+                {
+                    maxSubstringLength = endIndex - startIndex + 1;
+                    largestSubstring = InputString.Substring(startIndex, maxSubstringLength);
+                }
+            }
+
+            return largestSubstring;
         }
     }
 }
