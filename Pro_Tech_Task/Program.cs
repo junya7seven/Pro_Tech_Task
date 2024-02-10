@@ -21,31 +21,36 @@ namespace PRO_Tech
          *    abcde -> edcbaabcde
         */
 
-        async static Task Main(string[] args)
+        static async Task Main(string[] args)
         {
-            string s = "asdasdad";
-            await Console.Out.WriteLineAsync(s);
-            RandomNumber rnd = new RandomNumber();
-            StringOperation oper = new StringOperation(s);
-            Sort sort = new Sort();
-            oper.Print();
-            sort.ChooseSort(s);
+            Console.WriteLine("Введите строку");
+            string s = Console.ReadLine();
+            if(string.IsNullOrWhiteSpace(s))
+            {
+                s = "teststring";
+            }
 
-            await Console.Out.WriteLineAsync(await rnd.RemoveChar(s));
+            StringOperation oper = new StringOperation(s);
+            Console.WriteLine(oper.InputString);
+
+
+            await oper.Print();
         }
     }
     class StringOperation
     {
         private bool check = false;
-
         public string InputString { get; set; }
-        public StringOperation(string inputString)
+        public StringOperation(string? inputString)
         {
-            this.InputString = inputString;
+            InputString = inputString;
         }
 
-        public void Print()
+        public async Task Print()
         {
+            RandomNumber rnd = new RandomNumber();
+            Sort sort = new Sort();
+
             List<char> list = new List<char>(isTrueString());
             Dictionary<char,int> dict = new Dictionary<char,int>(CountPrint());
             string result = StringSplit();
@@ -66,6 +71,9 @@ namespace PRO_Tech
                 {
                     Console.WriteLine($"Символ '{pair.Key}' встречается {pair.Value} раз.");
                 }
+                sort.ChooseSort(InputString);
+                await Console.Out.WriteLineAsync(await rnd.RemoveChar(InputString));
+
             }
         }
 
@@ -90,28 +98,18 @@ namespace PRO_Tech
         private string StringSplit()
         {
             StringBuilder result = new StringBuilder();
-
-            if (InputString.Length % 2 == 0)
+            int split = InputString.Length/2;
+            if(InputString.Length % 2 ==0)
             {
-                foreach (char c in InputString.Substring(0, InputString.Length / 2).ToCharArray().Reverse())
-                {
-                    result.Append(c);
-                }
-                foreach (char c in InputString.Substring(InputString.Length / 2).ToCharArray().Reverse())
-                {
-                    result.Append(c);
-                }
+                result.Append(InputString.Remove(0, split).Reverse().ToArray());
+                result.Append(InputString.Remove(split).Reverse().ToArray());
+                return result.ToString();
             }
             else
             {
-                foreach (char c in InputString.ToCharArray().Reverse())
-                {
-                    result.Append(c);
-                }
-                result.Append(InputString);
+                result.Append(InputString.Reverse().ToArray()).Append(InputString);
+                return result.ToString();
             }
-
-            return result.ToString();
         }
 
 
