@@ -51,9 +51,10 @@ namespace Pro_Tech_Task.StringOper
             Sort sort = new Sort();
 
             List<char> list = new List<char>(isTrueString());
-            Dictionary<char, int> dict = new Dictionary<char, int>(CountPrint());
             string result = StringSplit();
-            string largSubstring = FindLargestVowelSubstring(result);
+            Dictionary<char, int> dict = new Dictionary<char, int>(CountPrint(ModString));
+
+            string largSubstring = FindLargestVowelSubstring(ModString);
             if (check)
             {
                 Console.WriteLine("Ошибочные символы:");
@@ -76,7 +77,7 @@ namespace Pro_Tech_Task.StringOper
             }
         }
 
-        private HashSet<char> isTrueString()
+        public HashSet<char> isTrueString()
         {
             HashSet<char> result = new HashSet<char>();
             foreach (char c in InputString)
@@ -100,8 +101,8 @@ namespace Pro_Tech_Task.StringOper
             int split = InputString.Length / 2;
             if (InputString.Length % 2 == 0)
             {
-                result.Append(InputString.Remove(0, split).Reverse().ToArray());
                 result.Append(InputString.Remove(split).Reverse().ToArray());
+                result.Append(InputString.Remove(0, split).Reverse().ToArray());
                 ModString = result.ToString();
                 return result.ToString();
             }
@@ -114,10 +115,10 @@ namespace Pro_Tech_Task.StringOper
         }
 
 
-        public Dictionary<char, int> CountPrint()
+        public Dictionary<char, int> CountPrint(string inputString)
         {
             Dictionary<char, int> charCount = new Dictionary<char, int>();
-            foreach (var item in InputString)
+            foreach (var item in inputString)
             {
                 if (charCount.ContainsKey(item))
                 {
@@ -129,36 +130,37 @@ namespace Pro_Tech_Task.StringOper
                 }
             }
             return charCount;
-
         }
 
-        public string FindLargestVowelSubstring(string InputString)
+        public string FindLargestVowelSubstring(string inputString)
         {
             string pattern = @"[aeiouy]";
-            MatchCollection matches = Regex.Matches(InputString, pattern);
-            string vowels = string.Concat(matches.Select(m => m.Value));
-
-            if (string.IsNullOrEmpty(vowels))
+            int check = 0;
+            int first = 0;
+            int last = 0;
+            for (int i = 0; i < inputString.Length; i++)
             {
-                return string.Empty;
-            }
-
-            int maxSubstringLength = 0;
-            string largestSubstring = string.Empty;
-
-            foreach (Match match in matches)
-            {
-                int startIndex = match.Index;
-                int endIndex = InputString.LastIndexOf(match.Value);
-
-                if (endIndex - startIndex + 1 > maxSubstringLength)
+                if (Regex.IsMatch(inputString[i].ToString(), pattern))
                 {
-                    maxSubstringLength = endIndex - startIndex + 1;
-                    largestSubstring = InputString.Substring(startIndex, maxSubstringLength);
+                    check++;
+                    last = i;
                 }
             }
+            for (int i = 0; i < inputString.Length; i++)
+            {
+                if (Regex.IsMatch(inputString[i].ToString(), pattern))
+                {
 
-            return largestSubstring;
+                    first = i;
+                    break;
+                }
+            }
+            if (check >= 1)
+            {
+                string result = inputString.Substring(first, last - first + 1);
+                return result;
+            }
+            return "Гласных нет";
         }
     }
 }

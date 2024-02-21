@@ -40,7 +40,7 @@ namespace Swagger.Controllers
                 {
                     InputString = inputString,
                     ModString = mod.StringSplit(),
-                    Count = mod.CountPrint(),
+                    Count = mod.CountPrint(mod.ModString),
                     MaxSubstring = mod.FindLargestVowelSubstring(mod.ModString),
                     TrimString = rnd.RemoveChar(inputString),
                     SortStringQuick = sort.QuickSort(inputString),

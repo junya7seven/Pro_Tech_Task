@@ -51,7 +51,7 @@ namespace Pro_Tech_Task.StringOper
             }
             return result;
         }
-        async Task<string> RemoveCharAtIndex(string input, int index)
+        public async Task<string> RemoveCharAtIndex(string input, int index)
         {
             if (index < 0 || index >= input.Length)
                 throw new ArgumentOutOfRangeException(nameof(index));
