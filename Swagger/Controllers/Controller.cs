@@ -34,14 +34,14 @@ namespace Swagger.Controllers
                 StringOperation mod = new StringOperation(inputString);
                 RandomNumber rnd = new RandomNumber();
                 Sort sort = new Sort();
-
+                var modString = mod.StringSplit();
 
                 var result = new
                 {
                     InputString = inputString,
-                    ModString = mod.StringSplit(),
-                    Count = mod.CountPrint(mod.ModString),
-                    MaxSubstring = mod.FindLargestVowelSubstring(mod.ModString),
+                    ModString = modString,
+                    Count = mod.CountPrint(modString),
+                    MaxSubstring = mod.FindLargestVowelSubstring(modString),
                     TrimString = rnd.RemoveChar(inputString),
                     SortStringQuick = sort.QuickSort(inputString),
                     SortStringTree = sort.TreeSort(inputString),

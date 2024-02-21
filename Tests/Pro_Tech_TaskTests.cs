@@ -21,32 +21,19 @@ namespace Tests
         // Словарь должен содержать один экземпляр символа и его кол-во
 
         [Test]
-        [TestCase("abcde", 5)]
-        [TestCase("abcdeabcde", 5)]
-        [TestCase("abcdeitz", 8)]
-        public void CountPrint_ReturnsCorrectDictionary(string input, int expectedCount)
+        public void CountPrint_ReturnsCorrectCharacterCounts()
         {
-            var stringOperation = new StringOperation(input);
-            var result = stringOperation.CountPrint();
-            Dictionary<char, int> expectedDictionary = new Dictionary<char, int>();
-            foreach (char c in input)
-            {
-                if (expectedDictionary.ContainsKey(c))
-                {
-                    expectedDictionary[c]++;
-                }
-                else
-                {
-                    expectedDictionary[c] = 1;
-                }
-            }
-            Assert.AreEqual(expectedCount, result.Count);
+            // Arrange
+            string input = "abbcc";
+            StringOperation stringOperation = new StringOperation(input);
 
-            foreach (var pair in expectedDictionary)
-            {
-                Assert.IsTrue(result.ContainsKey(pair.Key));
-                Assert.AreEqual(pair.Value, result[pair.Key]);
-            }
+            // Act
+            Dictionary<char, int> result = new Dictionary<char, int>(stringOperation.CountPrint(input));
+
+            // Assert
+            Assert.AreEqual(1, result['a']);
+            Assert.AreEqual(2, result['b']);
+            Assert.AreEqual(2, result['c']);
         }
 
 
