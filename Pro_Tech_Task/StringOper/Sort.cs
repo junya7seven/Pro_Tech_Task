@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pro_Tech_Task
+namespace Pro_Tech_Task.StringOper
 {
-    class Sort
+    public class Sort
     {
+
         public void ChooseSort(string input)
         {
             Console.WriteLine("Выберите сортировку 1-QuickSort 2-TreeSort");
             string choose = Console.ReadLine();
-            if(choose == "1")
+            if (choose == "1")
             {
                 string QuickSorted = QuickSort(input);
                 Console.WriteLine($"{QuickSorted} - Быстрая сортировка");

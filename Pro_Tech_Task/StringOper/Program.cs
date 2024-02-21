@@ -6,12 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using PRO_Tech;
-using Pro_Tech_Task;
 
-namespace PRO_Tech
+namespace Pro_Tech_Task.StringOper
 {
-    public class FirstTask
+    public class Program
     {
         /*    Создать приложение, которое на вход будет получать строку.
          *    Четная строка - программа должна разделить её на две подстроки, каждую подстроку перевернуть и соединять обратно обе подстроки в одну строку.
@@ -25,7 +23,7 @@ namespace PRO_Tech
         {
             Console.WriteLine("Введите строку");
             string s = Console.ReadLine();
-            if(string.IsNullOrWhiteSpace(s))
+            if (string.IsNullOrWhiteSpace(s))
             {
                 s = "teststring";
             }
@@ -37,10 +35,11 @@ namespace PRO_Tech
             await oper.Print();
         }
     }
-    class StringOperation
+    public class StringOperation
     {
         private bool check = false;
         public string InputString { get; set; }
+        public string ModString { get; set; }
         public StringOperation(string? inputString)
         {
             InputString = inputString;
@@ -52,10 +51,10 @@ namespace PRO_Tech
             Sort sort = new Sort();
 
             List<char> list = new List<char>(isTrueString());
-            Dictionary<char,int> dict = new Dictionary<char,int>(CountPrint());
+            Dictionary<char, int> dict = new Dictionary<char, int>(CountPrint());
             string result = StringSplit();
             string largSubstring = FindLargestVowelSubstring(result);
-            if(check)
+            if (check)
             {
                 Console.WriteLine("Ошибочные символы:");
                 foreach (char c in list)
@@ -80,45 +79,47 @@ namespace PRO_Tech
         private HashSet<char> isTrueString()
         {
             HashSet<char> result = new HashSet<char>();
-            foreach(char c in InputString)
+            foreach (char c in InputString)
             {
                 if (!Regex.IsMatch(c.ToString(), @"[a-z]"))
                 {
-                    
+
                     result.Add(c);
                 }
             }
-            if(result.Count > 0)
+            if (result.Count > 0)
             {
                 check = true;
             }
             return result;
         }
 
-        private string StringSplit()
+        public string StringSplit()
         {
             StringBuilder result = new StringBuilder();
-            int split = InputString.Length/2;
-            if(InputString.Length % 2 ==0)
+            int split = InputString.Length / 2;
+            if (InputString.Length % 2 == 0)
             {
                 result.Append(InputString.Remove(0, split).Reverse().ToArray());
                 result.Append(InputString.Remove(split).Reverse().ToArray());
+                ModString = result.ToString();
                 return result.ToString();
             }
             else
             {
                 result.Append(InputString.Reverse().ToArray()).Append(InputString);
+                ModString = result.ToString();
                 return result.ToString();
             }
         }
 
 
-        private Dictionary<char,int> CountPrint()
+        public Dictionary<char, int> CountPrint()
         {
-            Dictionary<char, int> charCount = new Dictionary<char,int>();
+            Dictionary<char, int> charCount = new Dictionary<char, int>();
             foreach (var item in InputString)
             {
-                if(charCount.ContainsKey(item))
+                if (charCount.ContainsKey(item))
                 {
                     charCount[item]++;
                 }
@@ -128,10 +129,10 @@ namespace PRO_Tech
                 }
             }
             return charCount;
-            
+
         }
 
-        private string FindLargestVowelSubstring(string InputString)
+        public string FindLargestVowelSubstring(string InputString)
         {
             string pattern = @"[aeiouy]";
             MatchCollection matches = Regex.Matches(InputString, pattern);

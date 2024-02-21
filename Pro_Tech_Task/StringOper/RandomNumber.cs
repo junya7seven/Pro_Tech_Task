@@ -5,28 +5,28 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pro_Tech_Task
+namespace Pro_Tech_Task.StringOper
 {
-    class RandomNumber
+    public class RandomNumber
     {
         public int? RandomNumb = null;
         async Task<int> GetRandomNumberAsync(string input)
         {
             int min = 0;
-            int max = input.Length-1;
+            int max = input.Length - 1;
             string apiUrl = $"https://www.random.org/integers/?num=1&min={min}&max={max}&col=1&base=10&format=plain&rnd=new";
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
-                    if(response.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
                         bool result = int.TryParse(responseBody, out int resultIndex);
                         return resultIndex;
                     }
-                    
+
                 }
                 catch (HttpRequestException ex)
                 {
@@ -39,7 +39,7 @@ namespace Pro_Tech_Task
         {
             string result = "";
             int indexAsync = await GetRandomNumberAsync(input);
-            if(indexAsync != 0)
+            if (indexAsync != 0)
             {
                 result = $"{await RemoveCharAtIndex(input, indexAsync)} - API Число: {indexAsync}";
             }
@@ -51,7 +51,7 @@ namespace Pro_Tech_Task
             }
             return result;
         }
-        async Task<string> RemoveCharAtIndex(string input,int index)
+        async Task<string> RemoveCharAtIndex(string input, int index)
         {
             if (index < 0 || index >= input.Length)
                 throw new ArgumentOutOfRangeException(nameof(index));
